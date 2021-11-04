@@ -1,15 +1,12 @@
 export enum DeviceType {
-   windowsWorkstation = 'Windows Workstation',
-   windowsServer = 'Windows Server',
-   mac = "Mac"
+    WINDOWS_WORKSTATION = 'Windows Workstation',
+    WINDOWS_SERVER = 'Windows Server',
+    MAC = "Mac"
 }
 
 export type Device = {
     id: string;
-    systemName: string;
+    system_name: string;
     type: string;
-    hddCapacity: number;
+    hdd_capacity: number;
 }
-
-
-//   let c: Color = Color.Green;
