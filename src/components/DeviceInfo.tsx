@@ -18,7 +18,6 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
@@ -40,8 +39,7 @@ const DeviceInfo: React.FC<IProps> = ({ device, onMutation }: IProps) => {
     }
     
     const editDevice = (data: Device) => {
-        console.log(device)
-        fetch(`http://localhost:3000/devices/${device.id}`, {
+        fetch(`${BASE_URL}/${device.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -66,7 +64,7 @@ const DeviceInfo: React.FC<IProps> = ({ device, onMutation }: IProps) => {
             </Modal>
             <ListItem 
                 secondaryAction={
-                    <IconButton edge="end" aria-label="delete" onClick={deleteDevice}>
+                    <IconButton color="error" edge="end" aria-label="delete" onClick={deleteDevice}>
                         <DeleteIcon />
                     </IconButton>
                 }
@@ -81,7 +79,7 @@ const DeviceInfo: React.FC<IProps> = ({ device, onMutation }: IProps) => {
                     )}
                     >
                 </ListItemText>
-                <IconButton edge="end" aria-label="delete" onClick={handleModalOpen}>
+                <IconButton color="primary" edge="end" aria-label="delete" onClick={handleModalOpen}>
                     <EditIcon />
                 </IconButton>
             </ListItem>

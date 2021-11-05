@@ -10,9 +10,28 @@ import { Device, DeviceType } from '../types/Device';
 import useSWR, { useSWRConfig } from 'swr';
 import { fetcher } from '../utils/helperFunctions';
 import { BASE_URL } from '../utils/constants';
+import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import DeviceForm from './DeviceForm';
+
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
 
 const MainView: React.FC = () => {
 
+    const [addModalOpen, setAddModalOpen] = useState(false);
+    const handleModalOpen = () => setAddModalOpen(true);
+    const handleModalClose = () => setAddModalOpen(false);
     const [devicesList, setDevicesList] = useState<Device[]>([]);
     const [deviceType, setDeviceType] = useState<string>('');
     const [sortBy, setSortBy] = useState<string>('');
@@ -44,10 +63,18 @@ const MainView: React.FC = () => {
     }
 
     const handleMutation = (isMutated: boolean) => {
-        console.log(isMutated)
         if (isMutated) {
             mutate(BASE_URL);
         }
+    }
+
+    const addDevice = (data: Device) => {
+        fetch(BASE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then((res) => handleMutation(true));
     }
 
     const renderDevicesList = () => {
@@ -76,8 +103,21 @@ const MainView: React.FC = () => {
 
     return (
         <Box display="flex" flexDirection="column" width="800px" margin="20px auto">
+            <Modal
+                open={addModalOpen}
+                onClose={handleModalClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <DeviceForm 
+                        onModalClose={handleModalClose} 
+                        onAddDevice={addDevice}/>
+                </Box>
+            </Modal>
+            <Typography variant="h1" fontSize="48px" textAlign="center" marginBottom="24px">Devices</Typography>
             <Box>
-                <FormControl style={{width: '50%'}}>
+                <FormControl style={{width: '40%'}}>
                     <InputLabel id="demo-simple-select-label">Device type</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -89,7 +129,7 @@ const MainView: React.FC = () => {
                     {getDeviceTypes()}   
                     </Select>
                 </FormControl>
-                <FormControl style={{width: '50%'}}>
+                <FormControl style={{width: '40%'}}>
                     <InputLabel id="demo-simple-select-label">Sort by:</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -101,6 +141,9 @@ const MainView: React.FC = () => {
                     {getSortByOptions()}
                     </Select>
                 </FormControl>
+                <Button variant="outlined" style={{height: '56px'}} endIcon={<AddIcon />} onClick={handleModalOpen}>
+                    Add device
+                </Button>
             </Box>
             <List>
                 {renderDevicesList()}
