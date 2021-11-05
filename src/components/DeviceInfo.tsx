@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal';
 import DeviceForm from './DeviceForm';
 import { Device } from '../types/Device';
 import Box from '@mui/material/Box';
+import { BASE_URL } from '../utils/constants';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -24,22 +25,28 @@ const style = {
 
 interface IProps {
     device: Device,
-    onDelete: (isDeleted: boolean) => void
+    onMutation: (isMutated: boolean) => void
 }
 
-const DeviceInfo: React.FC<IProps> = ({ device, onDelete }) => {
+const DeviceInfo: React.FC<IProps> = ({ device, onMutation }: IProps) => {
 
     const [editModalOpen, setEditModalOpen] = useState(false);
     const handleModalOpen = () => setEditModalOpen(true);
     const handleModalClose = () => setEditModalOpen(false);
 
     const deleteDevice = (event: any) => {
-        fetch(`http://localhost:3001/devices/${device.id}`, { method: 'DELETE' })
-            .then((data) => onDelete(true));
+        fetch(`${BASE_URL}/${device.id}`, { method: 'DELETE' })
+            .then((data) => onMutation(true));
     }
     
-    const editDevice = () => {
-        handleModalOpen()
+    const editDevice = (data: Device) => {
+        fetch(`http://localhost:3000/devices/${data.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then((res) => res.json())
+        .then((res) => onMutation(true))
     }
 
     return (
@@ -51,7 +58,11 @@ const DeviceInfo: React.FC<IProps> = ({ device, onDelete }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <DeviceForm device={device} onModalClose={handleModalClose}/>
+                    <DeviceForm 
+                        device={device} 
+                        onModalClose={handleModalClose} 
+                        isEdit={true}
+                        onEditDevice={editDevice}/>
                 </Box>
             </Modal>
             <ListItem 
@@ -71,7 +82,7 @@ const DeviceInfo: React.FC<IProps> = ({ device, onDelete }) => {
                     )}
                     >
                 </ListItemText>
-                <IconButton edge="end" aria-label="delete" onClick={editDevice}>
+                <IconButton edge="end" aria-label="delete" onClick={handleModalOpen}>
                     <EditIcon />
                 </IconButton>
             </ListItem>

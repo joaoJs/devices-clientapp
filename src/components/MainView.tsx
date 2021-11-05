@@ -9,6 +9,7 @@ import Select from '@mui/material/Select';
 import { Device, DeviceType } from '../types/Device';
 import useSWR, { useSWRConfig } from 'swr';
 import { fetcher } from '../utils/helperFunctions';
+import { BASE_URL } from '../utils/constants';
 
 const MainView: React.FC = () => {
 
@@ -18,7 +19,7 @@ const MainView: React.FC = () => {
 
     const { mutate } = useSWRConfig();
 
-    const { data, error } = useSWR('http://localhost:3001/devices', fetcher, {
+    const { data, error } = useSWR(BASE_URL, fetcher, {
         onSuccess: (res: Device[]) => {
             setDevicesList(res);
         }
@@ -42,9 +43,10 @@ const MainView: React.FC = () => {
         return <div>loading...</div>
     }
 
-    const handleDelete = (isDeleted: boolean) => {
-        if (isDeleted) {
-            mutate('http://localhost:3001/devices');
+    const handleMutation = (isMutated: boolean) => {
+        console.log(isMutated)
+        if (isMutated) {
+            mutate(BASE_URL);
         }
     }
 
@@ -64,7 +66,7 @@ const MainView: React.FC = () => {
             }
         })
         .map((device: Device) => {
-            return <DeviceInfo device={device} onDelete={handleDelete}></DeviceInfo>
+            return <DeviceInfo device={device} onMutation={handleMutation}></DeviceInfo>
         });
     }
 

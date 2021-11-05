@@ -11,27 +11,43 @@ const formStyles = {
 }
 
 const closeBtnStyles = {
-    width: '30px',
+    width: '32px',
     alignSelf: 'end'
 }
 
 const submitBtnStyles = {
-    width: '30px',
+    width: '32px',
     alignSelf: 'center',
     color: 'green'
+}
+
+const inputStyles = {
+    margin: '16px'
 }
 
 interface IFormProps {
   device: Device;
   onModalClose: () => void;
+  onEditDevice: (data: Device) => void;
+  isEdit: boolean;
 }
 
-const DeviceForm: FC<IFormProps> = ({ device, onModalClose }: IFormProps) => {
+const DeviceForm: FC<IFormProps> = ({ device, onModalClose, isEdit, onEditDevice }: IFormProps) => {
   const { handleSubmit, control, formState } = useForm();
   const [result, setResult] = useState("");
-  const onSubmit = (data: any) => {
+
+    const updateDevice = (data: Device) => {
+        onEditDevice(data);
+    }
+
+  const onSubmit = (data: Device) => {
     console.log(data);
-    setResult(JSON.stringify(data));
+    if (isEdit) {
+        updateDevice(data)
+    } else {
+
+    }
+    onModalClose();
   };
 
   const getDeviceTypes = () =>
@@ -55,26 +71,26 @@ const DeviceForm: FC<IFormProps> = ({ device, onModalClose }: IFormProps) => {
       <Controller
         name={"systemName"}
         control={control}
-        defaultValue={device.system_name}
+        defaultValue={isEdit ? device.system_name : ''}
         render={({ field: { onChange, value } }) => (
-          <TextField onChange={onChange} value={value} label={"System name"} />
+          <TextField style={inputStyles} onChange={onChange} value={value} label={"System name"} />
         )}
       />
       <Controller
         name={"hddCapacity"}
-        defaultValue={device.hdd_capacity}
+        defaultValue={isEdit ? device.hdd_capacity : ''}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TextField onChange={onChange} value={value} label={"hdd capacity"} />
+          <TextField style={inputStyles} onChange={onChange} value={value} label={"hdd capacity"} />
         )}
       />
       <Controller
         name={"deviceType"}
-        defaultValue={device.type}
+        defaultValue={isEdit ? device.type : ''}
         control={control}
         render={({ field: { onChange, value } }) => (
           <>
-            <Select onChange={onChange} value={value}>
+            <Select style={inputStyles} onChange={onChange} value={value}>
               {getDeviceTypes()}
             </Select>
           </>
