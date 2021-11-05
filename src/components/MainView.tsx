@@ -78,11 +78,11 @@ const MainView: React.FC = () => {
                 <FormControl style={{width: '50%'}}>
                     <InputLabel id="demo-simple-select-label">Device type</InputLabel>
                     <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={deviceType}
-                    label="Device type"
-                    onChange={handleDeviceTypeChange}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={deviceType}
+                        label="Device type"
+                        onChange={handleDeviceTypeChange}
                     >
                     {getDeviceTypes()}   
                     </Select>
@@ -90,11 +90,11 @@ const MainView: React.FC = () => {
                 <FormControl style={{width: '50%'}}>
                     <InputLabel id="demo-simple-select-label">Sort by:</InputLabel>
                     <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={sortBy}
-                    label="Sort by"
-                    onChange={handleSortBy}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={sortBy}
+                        label="Sort by"
+                        onChange={handleSortBy}
                     >
                     {getSortByOptions()}
                     </Select>
