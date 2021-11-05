@@ -16,12 +16,6 @@ const closeBtnStyles = {
   alignSelf: "end",
 };
 
-const submitBtnStyles = {
-  width: "32px",
-  alignSelf: "center",
-  color: "green",
-};
-
 const inputStyles = {
   margin: "16px",
 };
