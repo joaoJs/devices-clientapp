@@ -40,13 +40,13 @@ const DeviceInfo: React.FC<IProps> = ({ device, onMutation }: IProps) => {
     }
     
     const editDevice = (data: Device) => {
-        fetch(`http://localhost:3000/devices/${data.id}`, {
+        console.log(device)
+        fetch(`http://localhost:3000/devices/${device.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-        .then((res) => res.json())
-        .then((res) => onMutation(true))
+        .then((res) => onMutation(true));
     }
 
     return (
@@ -61,7 +61,6 @@ const DeviceInfo: React.FC<IProps> = ({ device, onMutation }: IProps) => {
                     <DeviceForm 
                         device={device} 
                         onModalClose={handleModalClose} 
-                        isEdit={true}
                         onEditDevice={editDevice}/>
                 </Box>
             </Modal>

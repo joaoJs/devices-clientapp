@@ -28,22 +28,18 @@ const inputStyles = {
 interface IFormProps {
   device: Device;
   onModalClose: () => void;
-  onEditDevice: (data: Device) => void;
-  isEdit: boolean;
+  onEditDevice?: (data: Device) => void;
 }
 
-const DeviceForm: FC<IFormProps> = ({ device, onModalClose, isEdit, onEditDevice }: IFormProps) => {
+const DeviceForm: FC<IFormProps> = ({ device, onModalClose, onEditDevice }: IFormProps) => {
   const { handleSubmit, control, formState } = useForm();
   const [result, setResult] = useState("");
 
-    const updateDevice = (data: Device) => {
-        onEditDevice(data);
-    }
-
   const onSubmit = (data: Device) => {
     console.log(data);
-    if (isEdit) {
-        updateDevice(data)
+    if (onEditDevice) {
+        console.log(data)
+        onEditDevice(data)
     } else {
 
     }
@@ -69,24 +65,24 @@ const DeviceForm: FC<IFormProps> = ({ device, onModalClose, isEdit, onEditDevice
       </IconButton>
 
       <Controller
-        name={"systemName"}
+        name={"system_name"}
         control={control}
-        defaultValue={isEdit ? device.system_name : ''}
+        defaultValue={onEditDevice ? device.system_name : ''}
         render={({ field: { onChange, value } }) => (
           <TextField style={inputStyles} onChange={onChange} value={value} label={"System name"} />
         )}
       />
       <Controller
-        name={"hddCapacity"}
-        defaultValue={isEdit ? device.hdd_capacity : ''}
+        name={"hdd_capacity"}
+        defaultValue={onEditDevice ? device.hdd_capacity : ''}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TextField style={inputStyles} onChange={onChange} value={value} label={"hdd capacity"} />
+          <TextField type="number" style={inputStyles} onChange={onChange} value={value} label={"hdd capacity"} />
         )}
       />
       <Controller
-        name={"deviceType"}
-        defaultValue={isEdit ? device.type : ''}
+        name={"type"}
+        defaultValue={onEditDevice ? device.type : ''}
         control={control}
         render={({ field: { onChange, value } }) => (
           <>
