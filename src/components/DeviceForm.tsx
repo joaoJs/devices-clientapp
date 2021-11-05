@@ -1,9 +1,10 @@
 import { IconButton, MenuItem, Select, TextField } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Device, DeviceType } from "../types/Device";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
+import Button from '@mui/material/Button';
 
 const formStyles = {
   display: "flex" as "flex",
@@ -36,7 +37,7 @@ const DeviceForm: FC<IFormProps> = ({
   device,
   onModalClose,
   onEditDevice,
-  onAddDevice
+  onAddDevice,
 }: IFormProps) => {
   const { handleSubmit, control } = useForm();
 
@@ -108,14 +109,15 @@ const DeviceForm: FC<IFormProps> = ({
         )}
       />
 
-      <IconButton
-        style={submitBtnStyles}
-        size="large"
-        aria-label="submit"
+      <Button
+        variant="outlined"
+        color="success"
+        style={{...inputStyles, height: "56px" }}
+        endIcon={<CheckCircleOutlineIcon />}
         type="submit"
       >
-        <CheckCircleOutlineIcon />
-      </IconButton>
+        Submit
+      </Button>
     </form>
   );
 };
