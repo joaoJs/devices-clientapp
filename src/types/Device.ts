@@ -1,7 +1,7 @@
 export enum DeviceType {
-    WINDOWS_WORKSTATION = 'Windows Workstation',
-    WINDOWS_SERVER = 'Windows Server',
-    MAC = "Mac"
+    WINDOWS_WORKSTATION = 'WINDOWS WORKSTATION',
+    WINDOWS_SERVER = 'WINDOWS SERVER',
+    MAC = "MAC"
 }
 
 export type Device = {

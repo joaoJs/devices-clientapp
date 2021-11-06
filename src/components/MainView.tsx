@@ -97,7 +97,11 @@ const MainView: React.FC = () => {
       })
       .map((device: Device) => {
         return (
-          <DeviceInfo device={device} onMutation={handleMutation}></DeviceInfo>
+          <DeviceInfo
+            key={`${device.id}-mainView`}
+            device={device}
+            onMutation={handleMutation}
+          ></DeviceInfo>
         );
       });
   };
@@ -105,11 +109,17 @@ const MainView: React.FC = () => {
   const getDeviceTypes = () =>
     Object.keys(DeviceType)
       .concat(["All"])
-      .map((dvcType) => <MenuItem value={dvcType}>{dvcType}</MenuItem>);
+      .map((dvcType) => (
+        <MenuItem key={`${dvcType}-mainView`} value={dvcType}>
+          {dvcType}
+        </MenuItem>
+      ));
 
   const getSortByOptions = () =>
     ["hdd_capacity", "system_name"].map((dvcProp) => (
-      <MenuItem value={dvcProp}>{dvcProp}</MenuItem>
+      <MenuItem key={`${dvcProp}-mainView`} value={dvcProp}>
+        {dvcProp}
+      </MenuItem>
     ));
 
   return (
@@ -165,7 +175,7 @@ const MainView: React.FC = () => {
       </Box>
       <Button
         variant="outlined"
-        style={{ width: "200px", marginTop: '16px', alignSelf: 'center' }}
+        style={{ width: "200px", marginTop: "16px", alignSelf: "center" }}
         endIcon={<AddIcon />}
         onClick={handleModalOpen}
       >
