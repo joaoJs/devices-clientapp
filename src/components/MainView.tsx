@@ -89,7 +89,10 @@ const MainView: React.FC = () => {
           if (sortBy === "hdd_capacity") {
             return a.hdd_capacity - b.hdd_capacity;
           } else {
-            return a.system_name.charCodeAt(0) - b.system_name.charCodeAt(0);
+            return (
+              a.system_name.toLowerCase().charCodeAt(0) -
+              b.system_name.toLowerCase().charCodeAt(0)
+            );
           }
         } else {
           return 0;
