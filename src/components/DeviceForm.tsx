@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Device, DeviceType } from "../types/Device";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 const formStyles = {
   display: "flex" as "flex",
@@ -105,7 +105,7 @@ const DeviceForm: FC<IFormProps> = ({
       <Button
         variant="outlined"
         color="success"
-        style={{...inputStyles, height: "56px" }}
+        style={{ ...inputStyles, height: "56px" }}
         endIcon={<CheckCircleOutlineIcon />}
         type="submit"
       >
