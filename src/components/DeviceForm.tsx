@@ -1,5 +1,5 @@
 import { IconButton, MenuItem, Select, TextField } from "@mui/material";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Device, DeviceType } from "../types/Device";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -36,7 +36,6 @@ const DeviceForm: FC<IFormProps> = ({
   const { handleSubmit, control } = useForm();
 
   const onSubmit = (data: Device) => {
-    console.log(data);
     if (onEditDevice) {
       onEditDevice(data);
     } else if (onAddDevice) {
