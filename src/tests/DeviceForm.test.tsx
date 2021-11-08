@@ -4,16 +4,6 @@ import DeviceForm from "../components/DeviceForm";
 import { mockDevice, callbackMock } from "./utils";
 import { act } from "react-dom/test-utils";
 
-beforeEach(() => {
-  jest.spyOn(global, "fetch").mockReturnValue(
-    new Promise<Response>((r) => setTimeout(r, 0))
-  );
-});
-
-afterEach(() => {
-  jest.restoreAllMocks();
-});
-
 test("renders component with submit button", async () => {
   render(<DeviceForm device={mockDevice} onModalClose={callbackMock} />);
   expect(screen.getByText(/Submit/i)).toBeInTheDocument();

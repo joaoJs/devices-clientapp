@@ -1,13 +1,9 @@
-import React from 'react';
-import './App.css';
-import MainView from './components/MainView';
+import React from "react";
+import "./App.css";
+import MainView from "./components/MainView";
 
 function App() {
-  return (
-    <>
-     <MainView />
-    </>
-  );
+  return <MainView />;
 }
 
 export default App;
