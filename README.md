@@ -1,6 +1,6 @@
 # Devices - client APP
 
-This application helps users manage their devices.
+This application helps users manage devices remotely.
 
 ## Steps to run the app
 
