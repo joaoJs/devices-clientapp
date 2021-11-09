@@ -34,7 +34,7 @@ const MainView: React.FC = () => {
   const handleModalOpen = () => setAddModalOpen(true);
   const handleModalClose = () => setAddModalOpen(false);
   const [devicesList, setDevicesList] = useState<Device[]>([]);
-  const [deviceType, setDeviceType] = useState<string>("");
+  const [deviceType, setDeviceType] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("");
   const matches = useMediaQuery(`(min-width:800px)`);
 
@@ -81,8 +81,8 @@ const MainView: React.FC = () => {
   const renderDevicesList = () => {
     return devicesList
       ?.filter((dvc: Device) => {
-        return deviceType.length && deviceType !== "All"
-          ? dvc.type === deviceType
+        return deviceType.length
+          ? deviceType.includes(dvc.type)
           : dvc;
       })
       .sort((a: Device, b: Device) => {
@@ -112,7 +112,6 @@ const MainView: React.FC = () => {
 
   const getDeviceTypes = () =>
     Object.keys(DeviceType)
-      .concat(["All"])
       .map((dvcType) => (
         <MenuItem key={`${dvcType}-mainView`} value={dvcType}>
           {dvcType}
@@ -157,6 +156,7 @@ const MainView: React.FC = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
+            multiple
             value={deviceType}
             label="Device type"
             onChange={handleDeviceTypeChange}
