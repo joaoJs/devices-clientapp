@@ -33,7 +33,7 @@ const DeviceForm: FC<IFormProps> = ({
   onEditDevice,
   onAddDevice,
 }: IFormProps) => {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, formState } = useForm({mode: 'onChange'});
 
   const onSubmit = (data: Device) => {
     if (onEditDevice) {
@@ -66,6 +66,7 @@ const DeviceForm: FC<IFormProps> = ({
         name={"system_name"}
         control={control}
         defaultValue={device?.system_name || ""}
+        rules={{required: true}}
         render={({ field: { onChange, value } }) => (
           <TextField
             style={inputStyles}
@@ -79,6 +80,7 @@ const DeviceForm: FC<IFormProps> = ({
         name={"hdd_capacity"}
         defaultValue={device?.hdd_capacity || ""}
         control={control}
+        rules={{required: true}}
         render={({ field: { onChange, value } }) => (
           <TextField
             type="number"
@@ -93,6 +95,7 @@ const DeviceForm: FC<IFormProps> = ({
         name={"type"}
         defaultValue={device?.type || ""}
         control={control}
+        rules={{required: true}}
         render={({ field: { onChange, value } }) => (
           <>
             <Select style={inputStyles} onChange={onChange} value={value}>
@@ -105,6 +108,7 @@ const DeviceForm: FC<IFormProps> = ({
       <Button
         variant="outlined"
         color="success"
+        disabled={!formState.isValid}
         style={{ ...inputStyles, height: "56px" }}
         endIcon={<CheckCircleOutlineIcon />}
         type="submit"
